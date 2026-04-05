@@ -170,7 +170,16 @@
         }
         
         @media (max-width: 900px) {
-            .sidebar { display: none; } /* Hide sidebar on small screens for now */
+            .sidebar { 
+                position: fixed; left: -320px; top: 0; bottom: 0; height: 100vh;
+                transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                z-index: 20; box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+            }
+            .sidebar.active { left: 0; }
+            .mobile-sidebar-toggle { display: block !important; }
+            .chat-history { padding: 1rem; }
+            .chat-box-container { padding: 1rem; }
+            .top-nav { padding: 1rem; }
         }
     </style>
 </head>
@@ -179,8 +188,11 @@
     <div class="blob-bg blob-2"></div>
 
     <div class="dashboard-container">
+        <!-- Overlay background for Mobile Sliding Menu -->
+        <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+        
         <!-- Sidebar layout with History and Auth control -->
-        <aside class="sidebar">
+        <aside class="sidebar" id="mobile-sidebar">
             <div class="sidebar-header">
                 <a href="/" class="logo" style="text-decoration:none; color:inherit; font-size:1.5rem; font-family:'Outfit'; font-weight:800;">MAANV<span style="color:var(--primary-color)">.AI</span></a>
             </div>
@@ -201,6 +213,8 @@
         <!-- Main Content (Full box central display) -->
         <main class="main-chat-area">
             <div class="top-nav">
+                <!-- Hamburger visible only on mobile -->
+                <button class="mobile-sidebar-toggle" style="display:none; margin-right:auto; background:none; border:none; color:white; font-size:1.8rem; cursor:pointer;" onclick="toggleSidebar()">☰</button>
                 <div class="user-profile">
                     Founder <div class="avatar">F</div>
                 </div>

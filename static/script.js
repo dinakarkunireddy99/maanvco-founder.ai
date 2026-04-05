@@ -163,3 +163,22 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 1500);
     };
 });
+
+// --- MOBILE RESPONSIVENESS LOGIC ---
+window.toggleMobileNav = function() {
+    const nav = document.getElementById('nav-links');
+    if(nav) nav.classList.toggle('active');
+}
+
+window.toggleSidebar = function() {
+    const sidebar = document.getElementById('mobile-sidebar');
+    const overlay = document.querySelector('.sidebar-overlay');
+    if(sidebar) {
+        sidebar.classList.toggle('active');
+        if(sidebar.classList.contains('active')) {
+            overlay.style.display = "block";
+        } else {
+            overlay.style.display = "none";
+        }
+    }
+}
