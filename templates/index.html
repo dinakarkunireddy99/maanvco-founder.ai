@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAANV.AI | Co-founder.AI</title>
+    <!-- Modern Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <!-- Link to external CSS -->
+    <link rel="stylesheet" href="../static/style.css">
+
+    <!-- Wow UX Rendering Engines -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: false, theme: 'dark' });
+        window.mermaid = mermaid;
+    </script>
+</head>
+
+<body>
+    <!-- Floating Background Decorators -->
+    <div class="blob-bg"></div>
+    <div class="blob-bg blob-2"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">MAANV<span>.AI</span></div>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#product">Co-founder.AI</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <button class="cta-btn" onclick="window.location.href='/login'">Sign In / Login</button>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="hero-section">
+        <!-- Left Side: Hero Text -->
+        <div class="hero-content">
+            <div class="badge">Introducing Co-founder.AI</div>
+            <h1 class="hero-title">CO-FOUNDER<span class="gradient-text">.AI</span></h1>
+            <p class="hero-subtitle">Where human imagination meets AI. The ultimate artificial intelligence partner to
+                ideate, build, and scale your vision.</p>
+            <div class="hero-actions">
+                <button class="primary-btn" onclick="triggerOnboarding()">Meet Co-founder.AI</button>
+                <button class="secondary-btn">Watch Demo <span class="play-icon">▶</span></button>
+            </div>
+        </div>
+
+        <!-- Right Side: Interactive Product Card -->
+        <div class="glass-card product-preview">
+            <div class="window-controls">
+                <span></span><span></span><span></span>
+            </div>
+
+            <!-- Chat History Area -->
+            <div class="preview-content chat-history" id="chat-history">
+                <div class="ai-avatar">🤖</div>
+                <div class="chat-bubble ai">Welcome to MAANV.AI. I am Co-founder.AI. How can we build the future today?
+                </div>
+            </div>
+
+            <!-- User Input Area -->
+            <div class="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Type a message..." autocomplete="off">
+                <button id="send-btn">Send</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Real-life Co-founder Features Section -->
+    <section class="features-section" id="about">
+        <div class="section-header">
+            <h2 class="section-title">What Does a <span class="gradient-text">Real Co-founder</span> Do?</h2>
+            <p class="section-subtitle">We analyzed exactly what makes human co-founders invaluable, and infused those
+                capabilities directly into Co-founder.AI.</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🧠</div>
+                <h3 class="feature-title">Vision & Strategy</h3>
+                <p class="feature-desc">A real co-founder helps you pivot, validate ideas, and find product-market fit.
+                    Co-founder.AI continuously analyzes market trends and helps you refine your business model
+                    dynamically.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">⚙️</div>
+                <h3 class="feature-title">Product Engineering</h3>
+                <p class="feature-desc">You need a CTO to build the MVP. Co-founder.AI instantly architects scalable
+                    systems, writes robust code across the stack, and deploys infrastructure automatically.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📈</div>
+                <h3 class="feature-title">Growth & Marketing</h3>
+                <p class="feature-desc">Go-to-market is half the battle. Our AI acts as your CMO, identifying early
+                    adopter profiles, writing high-converting copy, and optimizing digital ad spends.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🤝</div>
+                <h3 class="feature-title">Pitch & Fundraising</h3>
+                <p class="feature-desc">Raising money requires perfect decks and financial models. Co-founder.AI
+                    generates data-backed pitch structures and runs financial projections mimicking a seasoned CFO.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <div class="section-header">
+            <h2 class="section-title">Get In <span class="gradient-text">Touch</span></h2>
+            <p class="section-subtitle">Ready to onboard your new AI Co-founder? Reach out to us.</p>
+        </div>
+        <div class="contact-container">
+            <div class="contact-card">
+                <h3>MAANV.AI Headquarters</h3>
+                <p>Email: maanvcofounder.ai@gmail.com</p>
+                <p>Phone: +91 8328574979</p>
+                <p>Address: Rajahmundry, Andhra Pradesh, INDIA</p>
+            </div>
+            <form class="contact-form"
+                onsubmit="event.preventDefault(); alert('Message sent successfully! Our team will reach out shortly.');">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea placeholder="How can we help?" rows="4" required></textarea>
+                <button type="submit" class="primary-btn">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 MAANV.AI. All rights reserved.</p>
+    </footer>
+
+    <!-- Link to external JS -->
+    <script src="../static/script.js"></script>
+</body>
+
+</html>

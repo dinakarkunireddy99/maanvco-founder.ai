@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workspace | MAANV.AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+    
+    <!-- Wow UX Rendering Engines -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: false, theme: 'dark' });
+        window.mermaid = mermaid;
+    </script>
+    
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden; /* No full page scroll, dashboard style */
+            background: #0f172a;
+        }
+        .dashboard-container {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+        }
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: rgba(0,0,0,0.4);
+            border-right: 1px solid var(--glass-border);
+            backdrop-filter: blur(20px);
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+            z-index: 10;
+        }
+        .sidebar-header {
+            margin-bottom: 2rem;
+            display: flex;    
+            justify-content: space-between;
+            align-items: center;
+        }
+        .new-chat-btn {
+            background: var(--primary-gradient);
+            border: none;
+            color: white;
+            padding: 0.8rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: transform 0.2s;
+        }
+        .new-chat-btn:hover {
+            transform: scale(1.02);
+        }
+        .history-list {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .history-item {
+            padding: 0.8rem 1rem;
+            background: rgba(255,255,255,0.03);
+            border-radius: 8px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .history-item:hover, .history-item.active {
+            background: rgba(99, 102, 241, 0.15);
+            color: white;
+        }
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: 1rem;
+            border-top: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .sidebar-btn {
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            color: var(--text-main);
+            padding: 0.8rem;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        .sidebar-btn:hover {
+            background: rgba(255,255,255,0.05);
+        }
+
+        /* Main Chat Area */
+        .main-chat-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .top-nav {
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            border-bottom: 1px solid var(--glass-border);
+            background: rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px);
+            z-index: 5;
+        }
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-weight: 500;
+        }
+        .avatar {
+            width: 35px; height: 35px; background: var(--primary-gradient);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-weight: 800; font-family: 'Outfit';
+        }
+
+        /* We override standard classes for full screen */
+        .chat-history {
+            flex: 1;
+            overflow-y: auto;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            height: auto; /* override fixed height from index.html */
+            max-height: none;
+        }
+        .chat-bubble {
+            max-width: 80%;
+            font-size: 1.1rem;
+        }
+        .chat-box-container {
+            padding: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        .chat-input-area {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            padding: 1rem 1.5rem;
+        }
+        
+        @media (max-width: 900px) {
+            .sidebar { display: none; } /* Hide sidebar on small screens for now */
+        }
+    </style>
+</head>
+<body>
+    <div class="blob-bg"></div>
+    <div class="blob-bg blob-2"></div>
+
+    <div class="dashboard-container">
+        <!-- Sidebar layout with History and Auth control -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="/" class="logo" style="text-decoration:none; color:inherit; font-size:1.5rem; font-family:'Outfit'; font-weight:800;">MAANV<span style="color:var(--primary-color)">.AI</span></a>
+            </div>
+            
+            <button class="new-chat-btn" onclick="window.location.reload()">+ New Chat</button>
+            
+            <div class="history-list" id="sidebar-history-list">
+                <div class="history-item active">Current Conversation</div>
+                <!-- Future dynamic chat history logs will stack here! -->
+            </div>
+            
+            <div class="sidebar-footer">
+                <a href="/" class="sidebar-btn">← Back to Home</a>
+                <button class="sidebar-btn" style="color:#ef4444; border-color:rgba(239, 68, 68, 0.3);" onclick="localStorage.removeItem('user_logged_in'); window.location.href='/';">Sign Out from Web App</button>
+            </div>
+        </aside>
+
+        <!-- Main Content (Full box central display) -->
+        <main class="main-chat-area">
+            <div class="top-nav">
+                <div class="user-profile">
+                    Founder <div class="avatar">F</div>
+                </div>
+            </div>
+
+            <div class="chat-history" id="chat-history">
+                <div class="ai-avatar" style="align-self:flex-start;">🤖</div>
+                <div class="chat-bubble ai">Welcome to your full-screen Co-founder workspace. How can I help you scale today?</div>
+            </div>
+
+            <div class="chat-box-container">
+                <div class="chat-input-area" style="background: rgba(0,0,0,0.6); border: 2px solid var(--glass-border);">
+                    <input type="text" id="chat-input" placeholder="Message Co-founder.AI..." autocomplete="off">
+                    <button id="send-btn" class="primary-btn" style="padding: 0.8rem 1.5rem; border-radius: 50px;">Send ↗</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Wire up the core AI integration logic from index.html -->
+    <script src="/static/script.js"></script>
+    <script>
+        // Kick out unauthorized users immediately
+        if (!localStorage.getItem('user_logged_in')) {
+            window.location.href = '/login';
+        }
+        
+        // --- HOMEPAGE TELEPORTER LISTENER ---
+        // Check if there's a cached message teleported from the homepage
+        const pendingMsg = sessionStorage.getItem("pending_first_msg");
+        if (pendingMsg) {
+            sessionStorage.removeItem("pending_first_msg");
+            setTimeout(() => {
+                document.getElementById('chat-input').value = pendingMsg;
+                document.getElementById('send-btn').click();
+            }, 600); // Tiny dramatic delay
+        }
+
+    </script>
+</body>
+</html>
