@@ -3,183 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Workspace | MAANV.AI</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <title>Workspace | MAANV.AI — Co-founder Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
-    
-    <!-- Wow UX Rendering Engines -->
+
+    <!-- Rendering Engines -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script type="module">
         import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
         mermaid.initialize({ startOnLoad: false, theme: 'dark' });
         window.mermaid = mermaid;
     </script>
-    
+
     <style>
-        body {
-            margin: 0;
-            overflow: hidden; /* No full page scroll, dashboard style */
-            background: #0f172a;
-        }
-        .dashboard-container {
-            display: flex;
-            height: 100vh;
-            width: 100vw;
-        }
-        /* Sidebar */
+        body { margin: 0; overflow: hidden; background: #060610; }
+
+        .dashboard-container { display: flex; height: 100vh; width: 100vw; }
+
+        /* ---- SIDEBAR ---- */
         .sidebar {
-            width: 280px;
-            background: rgba(0,0,0,0.4);
+            width: 275px;
+            background: rgba(4, 4, 12, 0.7);
             border-right: 1px solid var(--glass-border);
-            backdrop-filter: blur(20px);
-            display: flex;
-            flex-direction: column;
+            backdrop-filter: blur(24px);
+            display: flex; flex-direction: column;
             padding: 1.5rem;
-            z-index: 10;
+            z-index: 10; flex-shrink: 0;
+            transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .sidebar-header {
-            margin-bottom: 2rem;
-            display: flex;    
-            justify-content: space-between;
-            align-items: center;
-        }
+        .sidebar-header { margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; }
         .new-chat-btn {
-            background: var(--primary-gradient);
-            border: none;
-            color: white;
-            padding: 0.8rem;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            margin-bottom: 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            transition: transform 0.2s;
+            background: var(--primary-gradient-short);
+            border: none; color: white; padding: 0.75rem 1rem;
+            border-radius: 10px; font-weight: 600; font-family: inherit;
+            cursor: pointer; width: 100%; margin-bottom: 1.5rem;
+            display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+            transition: transform 0.2s, box-shadow 0.2s; font-size: 0.95rem;
         }
-        .new-chat-btn:hover {
-            transform: scale(1.02);
+        .new-chat-btn:hover { transform: scale(1.02); box-shadow: 0 6px 20px rgba(124,58,237,0.4); }
+        .sidebar-section-label {
+            color: var(--text-muted); font-size: 0.72rem; font-weight: 600;
+            letter-spacing: 1px; text-transform: uppercase;
+            margin-bottom: 0.6rem; padding: 0 0.2rem;
         }
-        .history-list {
-            flex: 1;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
+        .history-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
+        .history-list::-webkit-scrollbar { width: 4px; }
+        .history-list::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 4px; }
         .history-item {
-            padding: 0.8rem 1rem;
-            background: rgba(255,255,255,0.03);
-            border-radius: 8px;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            cursor: pointer;
+            padding: 0.75rem 1rem;
+            background: rgba(255,255,255,0.02);
+            border-radius: 8px; color: var(--text-muted);
+            font-size: 0.88rem; cursor: pointer;
             transition: all 0.2s;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            border: 1px solid transparent;
         }
         .history-item:hover, .history-item.active {
-            background: rgba(99, 102, 241, 0.15);
-            color: white;
+            background: rgba(124,58,237,0.12);
+            color: white; border-color: rgba(124,58,237,0.2);
         }
-        .sidebar-footer {
-            margin-top: auto;
-            padding-top: 1rem;
-            border-top: 1px solid var(--glass-border);
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
+        .sidebar-footer { margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--glass-border); display: flex; flex-direction: column; gap: 0.5rem; }
         .sidebar-btn {
-            background: transparent;
-            border: 1px solid var(--glass-border);
-            color: var(--text-main);
-            padding: 0.8rem;
-            border-radius: 8px;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-            transition: 0.2s;
+            background: transparent; border: 1px solid var(--glass-border);
+            color: var(--text-main); padding: 0.75rem;
+            border-radius: 8px; cursor: pointer; text-align: center;
+            text-decoration: none; transition: 0.2s; font-family: inherit;
+            font-size: 0.88rem; display: block;
         }
-        .sidebar-btn:hover {
-            background: rgba(255,255,255,0.05);
-        }
+        .sidebar-btn:hover { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.12); }
+        .sidebar-btn.danger { color: #f87171; border-color: rgba(248,113,113,0.2); }
+        .sidebar-btn.danger:hover { background: rgba(248,113,113,0.08); }
 
-        /* Main Chat Area */
-        .main-chat-area {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
+        /* ---- MAIN CHAT AREA ---- */
+        .main-chat-area { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; }
+
+        /* Top Nav */
         .top-nav {
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
+            padding: 0.9rem 2rem;
+            display: flex; justify-content: space-between; align-items: center;
             border-bottom: 1px solid var(--glass-border);
-            background: rgba(0,0,0,0.2);
-            backdrop-filter: blur(10px);
-            z-index: 5;
+            background: rgba(0,0,0,0.3); backdrop-filter: blur(12px); z-index: 5; flex-shrink: 0;
         }
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            font-weight: 500;
+        .model-badge {
+            display: flex; align-items: center; gap: 0.5rem;
+            background: rgba(124,58,237,0.1); border: 1px solid rgba(124,58,237,0.2);
+            padding: 0.35rem 0.9rem; border-radius: 50px;
+            font-size: 0.8rem; color: #c4b5fd; font-weight: 600;
         }
+        .model-badge-dot { width: 7px; height: 7px; border-radius: 50%; background: #22c55e; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+        .user-profile { display: flex; align-items: center; gap: 0.8rem; font-weight: 500; font-size: 0.9rem; color: var(--text-muted); }
         .avatar {
-            width: 35px; height: 35px; background: var(--primary-gradient);
+            width: 34px; height: 34px; background: var(--primary-gradient-short);
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-weight: 800; font-family: 'Outfit';
+            font-weight: 800; font-family: 'Outfit'; font-size: 0.95rem;
         }
 
-        /* We override standard classes for full screen */
+        /* Chat History */
         .chat-history {
-            flex: 1;
-            overflow-y: auto;
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            max-width: 900px;
-            margin: 0 auto;
-            width: 100%;
-            height: auto; /* override fixed height from index.html */
-            max-height: none;
+            flex: 1; overflow-y: auto; padding: 2rem;
+            display: flex; flex-direction: column; gap: 1.5rem;
+            max-width: 860px; margin: 0 auto; width: 100%;
+            height: auto; max-height: none;
         }
-        .chat-bubble {
-            max-width: 80%;
-            font-size: 1.1rem;
+        .chat-history::-webkit-scrollbar { width: 5px; }
+        .chat-history::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 4px; }
+        .chat-bubble { max-width: 82%; font-size: 1rem; }
+
+        /* Prompt Chips */
+        .prompt-chips-wrapper {
+            padding: 0 2rem 1rem;
+            max-width: 860px; margin: 0 auto; width: 100%;
         }
+        .prompt-chips-label { color: var(--text-muted); font-size: 0.8rem; font-weight: 500; margin-bottom: 0.7rem; }
+        .prompt-chips { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+        .prompt-chip {
+            padding: 0.45rem 1rem;
+            background: rgba(124,58,237,0.08);
+            border: 1px solid rgba(124,58,237,0.2);
+            border-radius: 50px; color: #c4b5fd;
+            font-size: 0.82rem; font-family: inherit; cursor: pointer;
+            transition: all 0.2s; white-space: nowrap;
+        }
+        .prompt-chip:hover { background: rgba(124,58,237,0.18); border-color: rgba(124,58,237,0.45); color: white; transform: translateY(-1px); }
+
+        /* Input Area */
         .chat-box-container {
-            padding: 2rem;
-            max-width: 900px;
-            margin: 0 auto;
-            width: 100%;
+            padding: 1rem 2rem 1.5rem;
+            max-width: 860px; margin: 0 auto; width: 100%; flex-shrink: 0;
         }
         .chat-input-area {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-            padding: 1rem 1.5rem;
+            background: rgba(8,8,20,0.8);
+            border: 1px solid rgba(124,58,237,0.3);
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(124,58,237,0.08);
+            padding: 0.9rem 1.2rem;
+            display: flex; align-items: flex-end; gap: 0.8rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
-        
+        .chat-input-area:focus-within {
+            border-color: rgba(124,58,237,0.6);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 20px rgba(124,58,237,0.15);
+        }
+        .chat-input-area textarea {
+            flex: 1; background: transparent; border: none;
+            color: var(--text-main); padding: 0.4rem 0.2rem;
+            font-family: inherit; font-size: 1rem; outline: none;
+            resize: none; min-height: 28px; max-height: 160px;
+            overflow-y: auto; line-height: 1.55;
+        }
+        .chat-input-area textarea::placeholder { color: var(--text-muted); }
+        .send-btn-chat {
+            background: var(--primary-gradient-short); border: none; color: white;
+            padding: 0.65rem 1.3rem; border-radius: 12px;
+            font-weight: 700; font-family: inherit; cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s; font-size: 1.1rem;
+            flex-shrink: 0; height: 42px; display: flex; align-items: center; justify-content: center;
+        }
+        .send-btn-chat:hover { transform: scale(1.06); box-shadow: 0 5px 15px rgba(124,58,237,0.45); }
+        .input-hint { font-size: 0.72rem; color: var(--text-muted); text-align: right; margin-top: 0.4rem; }
+
+        /* Responsive */
         @media (max-width: 900px) {
-            .sidebar { 
-                position: fixed; left: -320px; top: 0; bottom: 0; height: 100vh;
-                transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                z-index: 20; box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+            .sidebar {
+                position: fixed; left: -300px; top: 0; bottom: 0; height: 100vh;
+                z-index: 20; box-shadow: 10px 0 40px rgba(0,0,0,0.6);
             }
             .sidebar.active { left: 0; }
             .mobile-sidebar-toggle { display: block !important; }
             .chat-history { padding: 1rem; }
-            .chat-box-container { padding: 1rem; }
-            .top-nav { padding: 1rem; }
+            .chat-box-container { padding: 0.5rem 1rem 1rem; }
+            .prompt-chips-wrapper { padding: 0 1rem 0.5rem; }
+            .top-nav { padding: 0.8rem 1rem; }
         }
     </style>
 </head>
@@ -188,71 +183,96 @@
     <div class="blob-bg blob-2"></div>
 
     <div class="dashboard-container">
-        <!-- Overlay background for Mobile Sliding Menu -->
+        <!-- Mobile overlay -->
         <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
-        
-        <!-- Sidebar layout with History and Auth control -->
+
+        <!-- SIDEBAR -->
         <aside class="sidebar" id="mobile-sidebar">
             <div class="sidebar-header">
-                <a href="/" class="logo" style="text-decoration:none; color:inherit; font-size:1.5rem; font-family:'Outfit'; font-weight:800;">MAANV<span style="color:var(--primary-color)">.AI</span></a>
+                <a href="/" class="logo" style="text-decoration:none; color:inherit; font-size:1.35rem; font-family:'Outfit'; font-weight:800;">
+                    MAANV<span>.AI</span>
+                </a>
             </div>
-            
-            <button class="new-chat-btn" onclick="window.location.reload()">+ New Chat</button>
-            
+
+            <button class="new-chat-btn" id="new-chat-btn">
+                <span>＋</span> New Chat
+            </button>
+
+            <div class="sidebar-section-label">Recent</div>
             <div class="history-list" id="sidebar-history-list">
-                <div class="history-item active">Current Conversation</div>
-                <!-- Future dynamic chat history logs will stack here! -->
+                <div class="history-item active" id="current-session-item">Current Conversation</div>
             </div>
-            
+
             <div class="sidebar-footer">
                 <a href="/" class="sidebar-btn">← Back to Home</a>
-                <button class="sidebar-btn" style="color:#ef4444; border-color:rgba(239, 68, 68, 0.3);" onclick="localStorage.removeItem('user_logged_in'); window.location.href='/';">Sign Out from Web App</button>
+                <button class="sidebar-btn" id="clear-chat-btn">🗑 Clear Chat</button>
+                <button class="sidebar-btn danger" onclick="sessionStorage.removeItem('maanv_session_active'); localStorage.removeItem('user_logged_in'); window.location.href='/login';">Sign Out</button>
             </div>
         </aside>
 
-        <!-- Main Content (Full box central display) -->
+        <!-- MAIN AREA -->
         <main class="main-chat-area">
+            <!-- Top Bar -->
             <div class="top-nav">
-                <!-- Hamburger visible only on mobile -->
-                <button class="mobile-sidebar-toggle" style="display:none; margin-right:auto; background:none; border:none; color:white; font-size:1.8rem; cursor:pointer;" onclick="toggleSidebar()">☰</button>
+                <div style="display:flex; align-items:center; gap:1rem;">
+                    <button class="mobile-sidebar-toggle" style="display:none; background:none; border:none; color:white; font-size:1.8rem; cursor:pointer;" onclick="toggleSidebar()">☰</button>
+                    <div class="model-badge">
+                        <div class="model-badge-dot"></div>
+                        Llama 3.3-70B · Groq
+                    </div>
+                </div>
                 <div class="user-profile">
                     Founder <div class="avatar">F</div>
                 </div>
             </div>
 
-            <div class="chat-history" id="chat-history">
+            <!-- Chat History -->
+            <div class="chat-history" id="chat-history" style="flex:1; overflow-y:auto;">
                 <div class="ai-avatar" style="align-self:flex-start;">🤖</div>
-                <div class="chat-bubble ai">Welcome to your full-screen Co-founder workspace. How can I help you scale today?</div>
+                <div class="chat-bubble ai">
+                    Welcome to your Co-founder workspace. I'm here to help you ideate, validate, and scale. What are we building today?
+                </div>
             </div>
 
-            <div class="chat-box-container">
-                <div class="chat-input-area" style="background: rgba(0,0,0,0.6); border: 2px solid var(--glass-border);">
-                    <input type="text" id="chat-input" placeholder="Message Co-founder.AI..." autocomplete="off">
-                    <button id="send-btn" class="primary-btn" style="padding: 0.8rem 1.5rem; border-radius: 50px;">Send ↗</button>
+            <!-- Prompt Chips (hidden after first message) -->
+            <div class="prompt-chips-wrapper" id="prompt-chips-wrapper">
+                <div class="prompt-chips-label">✦ Try asking:</div>
+                <div class="prompt-chips">
+                    <button class="prompt-chip" data-msg="Help me validate my SaaS idea for the Indian market.">Validate my SaaS idea 💡</button>
+                    <button class="prompt-chip" data-msg="Build a pitch deck outline for a Series A fundraise.">Build a pitch deck 📊</button>
+                    <button class="prompt-chip" data-msg="Give me a complete unit economics breakdown: CAC, LTV, payback period for my startup.">Unit economics breakdown 🧮</button>
+                    <button class="prompt-chip" data-msg="Who are the top VCs investing in Indian B2B SaaS right now?">Top Indian VCs 🤝</button>
+                    <button class="prompt-chip" data-msg="Draw a Mermaid.js revenue growth chart for a D2C startup over 3 years in India.">Revenue growth chart 📈</button>
                 </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="chat-box-container">
+                <div class="chat-input-area">
+                    <textarea id="chat-input" placeholder="Message Co-founder.AI... (Ctrl+Enter to send)" rows="1" autocomplete="off"></textarea>
+                    <button class="send-btn-chat" id="send-btn" title="Send (Ctrl+Enter)">↗</button>
+                </div>
+                <div class="input-hint">Ctrl+Enter to send · Powered by Groq · Context-aware multi-turn chat</div>
             </div>
         </main>
     </div>
 
-    <!-- Wire up the core AI integration logic from index.html -->
     <script src="/static/script.js"></script>
     <script>
-        // Kick out unauthorized users immediately
+        // Guard: kick out unauthorized users
         if (!localStorage.getItem('user_logged_in')) {
             window.location.href = '/login';
         }
-        
-        // --- HOMEPAGE TELEPORTER LISTENER ---
-        // Check if there's a cached message teleported from the homepage
+
+        // Homepage teleporter: pick up pending message from landing page
         const pendingMsg = sessionStorage.getItem("pending_first_msg");
         if (pendingMsg) {
             sessionStorage.removeItem("pending_first_msg");
             setTimeout(() => {
                 document.getElementById('chat-input').value = pendingMsg;
                 document.getElementById('send-btn').click();
-            }, 600); // Tiny dramatic delay
+            }, 600);
         }
-
     </script>
 </body>
 </html>

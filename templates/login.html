@@ -3,152 +3,404 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | MAANV.AI</title>
-    <!-- Modern Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <title>Sign In | MAANV.AI — Access Your AI Co-founder</title>
+    <meta name="description" content="Sign in or create your MAANV.AI account to access Co-founder.AI — your elite AI business partner for the Indian startup ecosystem.">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
-    
+
     <style>
+        /* Allow scroll on small screens */
+        body { overflow-y: auto; }
+
+        /* Glow ring */
+        .login-glow {
+            position: fixed; width: 540px; height: 540px;
+            background: radial-gradient(circle, rgba(124,58,237,0.18) 0%, transparent 70%);
+            top: 50%; left: 50%; transform: translate(-50%,-50%);
+            pointer-events: none;
+            animation: glowPulse 4s ease-in-out infinite alternate; z-index: 1;
+        }
+        @keyframes glowPulse {
+            0%   { opacity: 0.7; transform: translate(-50%,-50%) scale(1);    }
+            100% { opacity: 1;   transform: translate(-50%,-50%) scale(1.15); }
+        }
+
         .login-wrapper {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            padding: 2rem;
-            position: relative;
-            z-index: 10;
+            display: flex; align-items: center; justify-content: center;
+            min-height: 100vh; padding: 2rem; position: relative; z-index: 10;
         }
         .login-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            padding: 3.5rem;
-            border-radius: 20px;
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            width: 100%;
-            max-width: 450px; /* Reduced slightly for modern proportion */
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            text-align: center;
-            animation: fadeIn 0.8s ease-out;
+            background: rgba(10,10,22,0.88);
+            border: 1px solid rgba(124,58,237,0.25);
+            padding: 2.8rem 3.2rem; border-radius: 24px;
+            backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+            width: 100%; max-width: 460px;
+            box-shadow: 0 30px 60px -10px rgba(0,0,0,0.7), 0 0 40px rgba(124,58,237,0.12);
+            text-align: center; animation: slideUp 0.55s ease-out;
         }
-        .login-header h2 { font-family: 'Outfit', sans-serif; font-size: 2.2rem; margin-bottom: 0.5rem; }
-        .login-header p { color: var(--text-muted); margin-bottom: 2.5rem; font-size: 1.05rem; }
-        
+
+        /* Tab Toggle */
+        .auth-tabs {
+            display: flex; background: rgba(255,255,255,0.04);
+            border: 1px solid var(--glass-border); border-radius: 12px;
+            padding: 4px; margin-bottom: 2.2rem;
+        }
+        .auth-tab {
+            flex: 1; padding: 0.6rem; border: none; background: transparent;
+            border-radius: 9px; color: var(--text-muted); font-family: inherit;
+            font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.25s;
+        }
+        .auth-tab.active {
+            background: var(--primary-gradient-short); color: white;
+            box-shadow: 0 4px 12px rgba(124,58,237,0.35);
+        }
+
         /* Social Buttons */
-        .social-login {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
+        .social-login { display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 1.6rem; }
         .social-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--glass-border);
-            padding: 0.9rem;
-            border-radius: 12px;
-            color: var(--text-main);
-            font-family: inherit;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            display: flex; align-items: center; justify-content: center; gap: 0.85rem;
+            width: 100%; background: rgba(255,255,255,0.04);
+            border: 1px solid var(--glass-border); padding: 0.85rem 1rem;
+            border-radius: 12px; color: var(--text-main); font-family: inherit;
+            font-size: 0.95rem; font-weight: 500; cursor: pointer; transition: all 0.25s;
         }
-        .social-btn img {
-            width: 20px;
-            height: 20px;
-        }
-        .social-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-2px);
-        }
-        
+        .social-btn img { width: 20px; height: 20px; flex-shrink: 0; }
+        .social-btn:hover { background: rgba(255,255,255,0.08); transform: translateY(-2px); border-color: rgba(124,58,237,0.35); }
+
         /* Divider */
         .divider {
-            display: flex;
-            align-items: center;
-            text-align: center;
-            margin-bottom: 2rem;
-            color: var(--text-muted);
-            font-size: 0.9rem;
+            display: flex; align-items: center; margin-bottom: 1.5rem;
+            color: var(--text-muted); font-size: 0.83rem;
         }
-        .divider::before, .divider::after {
-            content: '';
-            flex: 1;
-            border-bottom: 1px solid var(--glass-border);
-        }
+        .divider::before, .divider::after { content:''; flex:1; border-bottom: 1px solid var(--glass-border); }
         .divider span { padding: 0 1rem; }
 
-        .form-group { text-align: left; margin-bottom: 1.5rem; }
-        .form-group label { display: block; margin-bottom: 0.5rem; color: var(--text-muted); font-size: 0.95rem; font-weight: 500; }
+        /* Form Panels */
+        .auth-form { display: none; }
+        .auth-form.active { display: block; }
+        .form-group { text-align: left; margin-bottom: 1.2rem; }
+        .form-group label { display: block; margin-bottom: 0.4rem; color: var(--text-muted); font-size: 0.87rem; font-weight: 500; }
         .form-group input {
-            width: 100%; background: rgba(0, 0, 0, 0.3); border: 1px solid var(--glass-border);
-            padding: 1rem 1.2rem; border-radius: 12px; color: var(--text-main); font-family: inherit;
-            font-size: 1rem; outline: none; transition: all 0.3s ease;
+            width: 100%; background: rgba(0,0,0,0.35); border: 1px solid var(--glass-border);
+            padding: 0.88rem 1.2rem; border-radius: 12px; color: var(--text-main);
+            font-family: inherit; font-size: 0.95rem; outline: none; transition: all 0.25s;
         }
-        .form-group input:focus { border-color: var(--primary-color); background: rgba(0, 0, 0, 0.5); box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1); }
+        .form-group input:focus { border-color: var(--primary-alt); box-shadow: 0 0 0 4px rgba(99,102,241,0.12); }
+        .form-forgot { text-align: right; margin-top: -0.5rem; margin-bottom: 1.2rem; }
+        .form-forgot a { color: var(--text-muted); text-decoration: none; font-size: 0.82rem; transition: color 0.2s; }
+        .form-forgot a:hover { color: var(--primary-alt); }
         .submit-btn {
-            background: var(--primary-gradient); border: none; color: white; padding: 1rem;
-            border-radius: 50px; font-weight: 600; font-size: 1.1rem; cursor: pointer; width: 100%; transition: transform 0.2s, box-shadow 0.2s; margin-top: 1rem;
+            background: var(--primary-gradient-short); border: none; color: white;
+            padding: 1rem; border-radius: 50px; font-weight: 700; font-size: 1rem;
+            font-family: inherit; cursor: pointer; width: 100%;
+            transition: transform 0.2s, box-shadow 0.2s; margin-top: 0.4rem;
         }
-        .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(99, 102, 241, 0.4); }
-        .auth-footer { margin-top: 2rem; color: var(--text-muted); font-size: 0.95rem; }
-        .auth-footer a { color: var(--primary-color); text-decoration: none; font-weight: 600; }
-        .back-link { position: absolute; top: 2rem; left: 2rem; color: var(--text-muted); text-decoration: none; display: flex; align-items: center; font-weight: 500; transition: color 0.3s; z-index: 20; }
+        .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(124,58,237,0.45); }
+
+        /* Trust signals */
+        .trust-signals { margin-top: 1.3rem; display: flex; justify-content: center; gap: 1.3rem; flex-wrap: wrap; }
+        .trust-item { display: flex; align-items: center; gap: 0.3rem; font-size: 0.77rem; color: var(--text-muted); }
+        .trust-item span { color: #22c55e; font-weight: 700; }
+
+        .auth-footer { margin-top: 1.3rem; color: var(--text-muted); font-size: 0.88rem; }
+        .auth-footer a { color: var(--primary-alt); text-decoration: none; font-weight: 600; }
+        .auth-footer a:hover { text-decoration: underline; }
+
+        .back-link {
+            position: fixed; top: 1.5rem; left: 1.5rem;
+            color: var(--text-muted); text-decoration: none;
+            display: flex; align-items: center; gap: 0.4rem;
+            font-weight: 500; font-size: 0.9rem; transition: color 0.3s; z-index: 20;
+        }
         .back-link:hover { color: var(--text-main); }
+        .login-logo { display: block; margin-bottom: 1.8rem; font-size: 1.6rem; font-weight: 800; font-family: 'Outfit', sans-serif; color: var(--text-main); text-decoration: none; }
+        .login-logo em { color: var(--primary-alt); font-style: normal; }
+        .login-header h2 { font-family: 'Outfit', sans-serif; font-size: 1.8rem; margin-bottom: 0.4rem; }
+        .login-header p { color: var(--text-muted); margin-bottom: 1.8rem; font-size: 0.93rem; }
+
+        /* ======================================================
+           SOCIAL AUTH MODAL (simulates OAuth detail collection)
+           ====================================================== */
+        .social-modal-overlay {
+            display: none;
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            align-items: center; justify-content: center;
+        }
+        .social-modal-overlay.open { display: flex; }
+        .social-modal {
+            background: rgba(12,12,28,0.97);
+            border: 1px solid rgba(124,58,237,0.3);
+            border-radius: 20px; padding: 2.4rem 2.8rem;
+            width: 100%; max-width: 420px; margin: 1rem;
+            box-shadow: 0 30px 70px rgba(0,0,0,0.8);
+            animation: modalIn 0.3s ease-out;
+            position: relative;
+        }
+        @keyframes modalIn { from { opacity:0; transform: scale(0.94) translateY(12px); } to { opacity:1; transform: scale(1) translateY(0); } }
+        .modal-close {
+            position: absolute; top: 1rem; right: 1.2rem;
+            background: none; border: none; color: var(--text-muted);
+            font-size: 1.4rem; cursor: pointer; transition: color 0.2s;
+        }
+        .modal-close:hover { color: var(--text-main); }
+        .modal-provider-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+        .modal-provider-icon { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.07); border: 1px solid var(--glass-border); font-size: 1.4rem; flex-shrink: 0; }
+        .modal-provider-icon img { width: 24px; height: 24px; }
+        .modal-provider-label { text-align: left; }
+        .modal-provider-label strong { display: block; font-family: 'Outfit', sans-serif; font-size: 1.1rem; }
+        .modal-provider-label span { color: var(--text-muted); font-size: 0.83rem; }
+        .modal-divider { border: none; border-top: 1px solid var(--glass-border); margin: 1.2rem 0; }
+        .modal-field { margin-bottom: 1.1rem; text-align: left; }
+        .modal-field label { display: block; margin-bottom: 0.4rem; color: var(--text-muted); font-size: 0.85rem; font-weight: 500; }
+        .modal-field input {
+            width: 100%; background: rgba(0,0,0,0.4); border: 1px solid var(--glass-border);
+            padding: 0.85rem 1rem; border-radius: 10px; color: var(--text-main);
+            font-family: inherit; font-size: 0.95rem; outline: none; transition: all 0.2s;
+        }
+        .modal-field input:focus { border-color: var(--primary-alt); box-shadow: 0 0 0 3px rgba(99,102,241,0.12); }
+        .modal-terms { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 1.2rem; line-height: 1.5; }
+        .modal-terms a { color: var(--primary-alt); text-decoration: none; }
+        .modal-confirm-btn {
+            background: var(--primary-gradient-short); border: none; color: white;
+            padding: 0.95rem; border-radius: 50px; font-weight: 700; font-size: 1rem;
+            font-family: inherit; cursor: pointer; width: 100%; transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .modal-confirm-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(124,58,237,0.45); }
+        .modal-confirm-btn.loading { opacity: 0.7; pointer-events: none; }
+        .modal-cancel { display: block; text-align: center; margin-top: 0.9rem; color: var(--text-muted); font-size: 0.85rem; cursor: pointer; text-decoration: underline; }
     </style>
 </head>
 <body>
     <div class="blob-bg"></div>
     <div class="blob-bg blob-2"></div>
-    <a href="/" class="back-link">← Return to Homepage</a>
-    
+    <div class="login-glow"></div>
+
+    <a href="/" class="back-link">← Back to Homepage</a>
+
     <div class="login-wrapper">
         <div class="login-card">
-            <a href="/" class="logo" style="text-decoration: none; color: inherit; display: block; margin-bottom: 2rem; font-size:1.5rem; font-weight:800; font-family:'Outfit'">MAANV<span style="color:var(--primary-color)">.AI</span></a>
-            <div class="login-header">
-                <h2>Welcome Back</h2>
-                <p>Sign in to access your AI Co-founder.</p>
+            <a href="/" class="login-logo">MAANV<em>.AI</em></a>
+
+            <!-- Tab Toggle -->
+            <div class="auth-tabs">
+                <button class="auth-tab active" id="tab-signin" onclick="switchTab('signin')">Sign In</button>
+                <button class="auth-tab" id="tab-signup" onclick="switchTab('signup')">Create Account</button>
             </div>
-            
-            <!-- Social Login Modals -->
-            <div class="social-login">
-                <button class="social-btn google-btn" onclick="mockLogin()"><img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google"> Continue with Google</button>
-                <button class="social-btn apple-btn" onclick="mockLogin()"><img src="https://www.svgrepo.com/show/511330/apple-173.svg" alt="Apple" style="filter: invert(1);"> Continue with Apple</button>
-                <button class="social-btn github-btn" onclick="mockLogin()"><img src="https://www.svgrepo.com/show/512317/github-142.svg" alt="GitHub" style="filter: invert(1);"> Continue with GitHub</button>
+
+            <!-- ===== SIGN IN PANEL ===== -->
+            <div class="auth-form active" id="form-signin">
+                <div class="login-header">
+                    <h2>Welcome Back</h2>
+                    <p>Sign in to access your AI Co-founder.</p>
+                </div>
+
+                <div class="social-login">
+                    <button class="social-btn" id="google-btn-signin"
+                        onclick="openSocialModal('Google', 'https://www.svgrepo.com/show/475656/google-color.svg', false)">
+                        <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google"> Continue with Google
+                    </button>
+                    <button class="social-btn"
+                        onclick="openSocialModal('Apple', 'https://www.svgrepo.com/show/511330/apple-173.svg', false, true)">
+                        <img src="https://www.svgrepo.com/show/511330/apple-173.svg" alt="Apple" style="filter:invert(1);"> Continue with Apple
+                    </button>
+                    <button class="social-btn"
+                        onclick="openSocialModal('GitHub', 'https://www.svgrepo.com/show/512317/github-142.svg', false, true)">
+                        <img src="https://www.svgrepo.com/show/512317/github-142.svg" alt="GitHub" style="filter:invert(1);"> Continue with GitHub
+                    </button>
+                </div>
+
+                <div class="divider"><span>OR continue with email</span></div>
+
+                <form onsubmit="event.preventDefault(); emailLogin();">
+                    <div class="form-group">
+                        <label for="signin-email">Email Address</label>
+                        <input type="email" id="signin-email" placeholder="you@startup.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signin-password">Password</label>
+                        <input type="password" id="signin-password" placeholder="••••••••" required>
+                    </div>
+                    <div class="form-forgot"><a href="#">Forgot password?</a></div>
+                    <button type="submit" class="submit-btn">Sign In →</button>
+                </form>
+
+                <div class="trust-signals">
+                    <div class="trust-item"><span>✓</span> Free tier available</div>
+                    <div class="trust-item"><span>✓</span> No credit card required</div>
+                    <div class="trust-item"><span>✓</span> Cancel anytime</div>
+                </div>
+                <div class="auth-footer">
+                    No account? <a href="#" onclick="switchTab('signup')">Create one free →</a>
+                </div>
             </div>
-            
-            <div class="divider"><span>OR</span></div>
-            
-            <form onsubmit="event.preventDefault(); mockLogin();">
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" placeholder="you@startup.com" required>
+
+            <!-- ===== SIGN UP PANEL ===== -->
+            <div class="auth-form" id="form-signup">
+                <div class="login-header">
+                    <h2>Join MAANV.AI</h2>
+                    <p>Create your account and meet your Co-founder.</p>
                 </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" placeholder="••••••••" required>
+
+                <div class="social-login">
+                    <button class="social-btn"
+                        onclick="openSocialModal('Google', 'https://www.svgrepo.com/show/475656/google-color.svg', true)">
+                        <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google"> Sign up with Google
+                    </button>
+                    <button class="social-btn"
+                        onclick="openSocialModal('GitHub', 'https://www.svgrepo.com/show/512317/github-142.svg', true, true)">
+                        <img src="https://www.svgrepo.com/show/512317/github-142.svg" alt="GitHub" style="filter:invert(1);"> Sign up with GitHub
+                    </button>
                 </div>
-                <button type="submit" class="submit-btn">Sign In with Email</button>
-            </form>
-            
-            <div class="auth-footer">
-                Don't have an account? <a href="#" onclick="mockLogin()">Create one here</a>
+
+                <div class="divider"><span>OR fill in details</span></div>
+
+                <form onsubmit="event.preventDefault(); emailSignUp();">
+                    <div class="form-group">
+                        <label for="signup-name">Full Name</label>
+                        <input type="text" id="signup-name" placeholder="Arjun Mehta" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">Work Email</label>
+                        <input type="email" id="signup-email" placeholder="you@startup.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Choose Password</label>
+                        <input type="password" id="signup-password" placeholder="Min. 8 characters" required minlength="8">
+                    </div>
+                    <button type="submit" class="submit-btn">Create Free Account →</button>
+                </form>
+
+                <div class="trust-signals">
+                    <div class="trust-item"><span>✓</span> Free plan included</div>
+                    <div class="trust-item"><span>✓</span> No credit card needed</div>
+                </div>
+                <div class="auth-footer">
+                    Already have an account? <a href="#" onclick="switchTab('signin')">Sign in here</a>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Frontend logic mock for UI feedback -->
+    <!-- ======================================================
+         SOCIAL AUTH MODAL — collects name + email like real OAuth
+         ====================================================== -->
+    <div class="social-modal-overlay" id="social-modal-overlay" onclick="closeSocialModalOutside(event)">
+        <div class="social-modal">
+            <button class="modal-close" onclick="closeSocialModal()">✕</button>
+
+            <div class="modal-provider-header">
+                <div class="modal-provider-icon">
+                    <img id="modal-provider-img" src="" alt="Provider">
+                </div>
+                <div class="modal-provider-label">
+                    <strong id="modal-provider-title">Continue with Google</strong>
+                    <span id="modal-provider-sub">maanv.ai wants to access your account</span>
+                </div>
+            </div>
+
+            <hr class="modal-divider">
+
+            <div class="modal-field">
+                <label for="modal-name">Full Name</label>
+                <input type="text" id="modal-name" placeholder="e.g. Arjun Mehta">
+            </div>
+            <div class="modal-field">
+                <label for="modal-email">Email Address</label>
+                <input type="email" id="modal-email" placeholder="you@gmail.com">
+            </div>
+
+            <p class="modal-terms">
+                By continuing, you agree to MAANV.AI's <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>. Your details are used for personalisation only.
+            </p>
+
+            <button class="modal-confirm-btn" id="modal-confirm-btn" onclick="confirmSocialLogin()">
+                Confirm &amp; Continue →
+            </button>
+            <span class="modal-cancel" onclick="closeSocialModal()">Cancel</span>
+        </div>
+    </div>
+
     <script>
-        function mockLogin() {
-            // Drops a browser flag to 'remember' the user is logged in
-            // so we can unlock the chat box on the home page!
-            localStorage.setItem("user_logged_in", "true");
-            window.location.href = "/";
+        /* ---- Tab Toggle ---- */
+        function switchTab(tab) {
+            document.getElementById('tab-signin').classList.toggle('active', tab === 'signin');
+            document.getElementById('tab-signup').classList.toggle('active', tab === 'signup');
+            document.getElementById('form-signin').classList.toggle('active', tab === 'signin');
+            document.getElementById('form-signup').classList.toggle('active', tab === 'signup');
+        }
+
+        /* ---- Social Modal ---- */
+        function openSocialModal(provider, iconUrl, isSignup, invertIcon) {
+            const overlay = document.getElementById('social-modal-overlay');
+            const img     = document.getElementById('modal-provider-img');
+            const title   = document.getElementById('modal-provider-title');
+            const sub     = document.getElementById('modal-provider-sub');
+
+            img.src = iconUrl;
+            img.style.filter = invertIcon ? 'invert(1)' : '';
+            title.textContent = (isSignup ? 'Sign up with ' : 'Continue with ') + provider;
+            sub.textContent   = 'maanv.ai wants to access your ' + provider + ' account';
+
+            // Pre-fill with demo data
+            document.getElementById('modal-name').value  = '';
+            document.getElementById('modal-email').value = '';
+
+            overlay.classList.add('open');
+            setTimeout(() => document.getElementById('modal-name').focus(), 200);
+        }
+
+        function closeSocialModal() {
+            document.getElementById('social-modal-overlay').classList.remove('open');
+        }
+
+        function closeSocialModalOutside(e) {
+            if (e.target === document.getElementById('social-modal-overlay')) {
+                closeSocialModal();
+            }
+        }
+
+        function confirmSocialLogin() {
+            const name  = document.getElementById('modal-name').value.trim();
+            const email = document.getElementById('modal-email').value.trim();
+
+            if (!name)  { document.getElementById('modal-name').focus();  return; }
+            if (!email || !email.includes('@')) { document.getElementById('modal-email').focus(); return; }
+
+            // Show loading state
+            const btn = document.getElementById('modal-confirm-btn');
+            btn.textContent = 'Verifying…';
+            btn.classList.add('loading');
+
+            // Simulate brief OAuth round-trip delay
+            setTimeout(() => {
+                completeLogin(name);
+            }, 1200);
+        }
+
+        /* ---- Email Login / Sign-up ---- */
+        function emailLogin() {
+            const email = document.getElementById('signin-email').value.trim();
+            const name  = email.split('@')[0]; // derive a name from email
+            completeLogin(name);
+        }
+
+        function emailSignUp() {
+            const name = document.getElementById('signup-name').value.trim();
+            completeLogin(name);
+        }
+
+        /* ---- Complete Login (shared) ---- */
+        function completeLogin(displayName) {
+            // Mark session as active — sessionStorage so it clears on tab close
+            sessionStorage.setItem('maanv_session_active', 'true');
+            sessionStorage.setItem('maanv_user_name', displayName || 'Founder');
+            localStorage.setItem('user_logged_in', 'true');
+
+            // Read pending message teleported from landing page, then go to workspace
+            window.location.href = '/chat';
         }
     </script>
 </body>
