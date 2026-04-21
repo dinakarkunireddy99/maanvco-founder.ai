@@ -9,6 +9,7 @@
         content="Co-founder.AI by MAANV is the ultimate AI co-founder for Indian startups. Get data-driven strategy, unit economics, Mermaid charts, growth frameworks and VC-level insights — powered by Llama 3.3-70B.">
     <!-- CSRF Token for Security -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <!-- Modern Fonts -->
     <link
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@300;400;500;600&display=swap"
@@ -26,313 +27,75 @@
 
 <body>
     <!-- Background Blobs -->
-    <div class="blob-bg"></div>
-    <div class="blob-bg blob-2"></div>
-    <div class="blob-bg blob-3"></div>
+    <div class="blob-container">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
 
     <!-- Navigation -->
     <nav class="navbar">
-        <a href="#" class="logo" style="text-decoration:none; color:inherit;">MAANV<span>.AI</span></a>
-        <ul class="nav-links" id="nav-links">
+        <a href="/" class="logo">MAANV<span>.AI</span></a>
+        <ul class="nav-links">
             <li><a href="#home">Home</a></li>
             <li><a href="#features">Features</a></li>
-            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#how-it-works">Process</a></li>
             <li><a href="#pricing">Pricing</a></li>
-            <li><a href="#contact">Contact</a></li>
         </ul>
-        <button class="mobile-menu-btn" onclick="toggleMobileNav()">☰</button>
-        <button id="auth-btn" class="cta-btn" onclick="window.location.href='/login'">Go to Dashboard →</button>
+        <button id="auth-btn" class="cta-btn" onclick="window.location.href='/login'">Dashboard →</button>
     </nav>
 
     <!-- ====== HERO SECTION ====== -->
     <main class="hero-section" id="home">
-        <div class="hero-content">
-            <div class="badge">✦ Introducing Co-founder.AI — India's First AI Business Partner</div>
-            <h1 class="hero-title">CO-FOUNDER<span class="gradient-text">.AI</span></h1>
-            <p class="hero-subtitle">Don't just build a startup—build a unicorn. The elite AI partner that challenges your ideas, validates your unit economics, and drafts your GTM roadmap in the Indian ecosystem.</p>
-            <div class="hero-actions">
-                <button class="primary-btn" onclick="triggerOnboarding()">Meet Co-founder.AI →</button>
-                <button class="secondary-btn" onclick="window.location.href='/login'" id="demo-btn">Sign In / Register
-                    <span class="play-icon">→</span></button>
-            </div>
+        <div class="badge">
+            <span>✦</span> Introducing Co-founder.AI — India's Elite Business Intelligence
+        </div>
+        <h1 class="hero-title">BUILD YOUR <br><span class="gradient-text">LEGACY</span> STARTUP</h1>
+        <p class="hero-subtitle">Meet Co-founder.AI. The powerful agentic partner built to ideate, validate, and scale
+            your vision in the Indian ecosystem — at the speed of thought.</p>
+
+        <div class="hero-actions">
+            <button class="primary-btn" onclick="window.location.href='/login'">Get Started Now</button>
+            <button class="secondary-btn" onclick="document.getElementById('features').scrollIntoView();">Explore
+                Features</button>
         </div>
 
-        <!-- Right: Interactive Product Preview Card -->
-        <div class="glass-card product-preview">
-            <div class="window-controls">
-                <span></span><span></span><span></span>
+        <!-- Interactive Product Preview -->
+        <div class="product-preview">
+            <div class="window-bar">
+                <div class="window-dot red"></div>
+                <div class="window-dot yellow"></div>
+                <div class="window-dot green"></div>
             </div>
-            <div class="preview-content chat-history" id="chat-history">
-                <div class="ai-avatar">🤖</div>
-                <div class="chat-bubble ai">Welcome to MAANV.AI. I am Co-founder.AI. How can we build the future today?
+            <div class="preview-content">
+                <div class="preview-sidebar">
+                    <div style="height: 12px; width: 80%; background: rgba(255,255,255,0.1); border-radius: 4px;"></div>
+                    <div style="height: 12px; width: 60%; background: rgba(255,255,255,0.1); border-radius: 4px;"></div>
+                    <div
+                        style="height: 12px; width: 90%; background: rgba(255,255,255,0.05); border-radius: 4px; margin-top: 1rem;">
+                    </div>
+                    <div style="height: 12px; width: 70%; background: rgba(255,255,255,0.05); border-radius: 4px;">
+                    </div>
                 </div>
-            </div>
-            <div class="chat-input-area">
-                <input type="text" id="chat-input" placeholder="Ask your Co-founder anything..." autocomplete="off">
-                <button id="send-btn">Send ↗</button>
+                <div class="preview-chat">
+                    <div class="chat-bubble bubble-ai">Welcome to MAANV.AI. I am Co-founder.AI. How can we disrupt the
+                        market today?</div>
+                    <div class="chat-bubble bubble-user">Hey! Help me build a GTM strategy for my SaaS startup in India.
+                    </div>
+                    <div class="chat-bubble bubble-ai">Elite choice. Moving from Tier-1 to Tier-2 requires a
+                        UPI-integrated growth loop. Let's break down the unit economics...</div>
+                </div>
             </div>
         </div>
     </main>
 
-    <!-- ====== ANIMATED STATS TICKER ====== -->
-    <div class="stats-ticker">
-        <div class="ticker-track" id="ticker-track">
-            <div class="ticker-item"><span>₹2.1T+</span> Indian VC-Backed Market</div>
-            <div class="ticker-dot"></div>
-            <div class="ticker-item"><span>Llama 3.3-70B</span> Intelligence Engine</div>
-            <div class="ticker-dot"></div>
-            <div class="ticker-item"><span>Sub-2s</span> Response via Groq Inference</div>
-            <div class="ticker-dot"></div>
-            <div class="ticker-item"><span>1,100+</span> Startups Advised</div>
-            <div class="ticker-dot"></div>
-            <div class="ticker-item"><span>Mermaid.js</span> Live Data Visualization</div>
-            <div class="ticker-dot"></div>
-            <div class="ticker-item"><span>UPI · GST · SEBI</span> India-First Context</div>
-            <div class="ticker-dot"></div>
-            <div class="ticker-item"><span>Peak XV · Sequoia</span> VC Benchmark Data</div>
-            <div class="ticker-dot"></div>
-            <!-- Duplicate for seamless loop -->
-            <div class="ticker-item"><span>₹2.1T+</span> Indian VC-Backed Market</div>
-            <div class="ticker-dot"></div>
-            <div class="ticker-item"><span>Llama 3.3-70B</span> Intelligence Engine</div>
-            <div class="ticker-dot"></div>
-            <div class="ticker-item"><span>Sub-2s</span> Response via Groq Inference</div>
-            <div class="ticker-dot"></div>
-            <div class="ticker-item"><span>1,100+</span> Startups Advised</div>
-            <div class="ticker-dot"></div>
-            <div class="ticker-item"><span>Mermaid.js</span> Live Data Visualization</div>
-            <div class="ticker-dot"></div>
-            <div class="ticker-item"><span>UPI · GST · SEBI</span> India-First Context</div>
-            <div class="ticker-dot"></div>
-            <div class="ticker-item"><span>Peak XV · Sequoia</span> VC Benchmark Data</div>
-            <div class="ticker-dot"></div>
-        </div>
-    </div>
-
     <!-- ====== FEATURES SECTION ====== -->
-    <section class="features-section" id="features">
-        <div class="section-header">
-            <div class="section-tag">Core Capabilities</div>
-            <h2 class="section-title">What Does a <span class="gradient-text">Real Co-founder</span> Do?</h2>
-            <p class="section-subtitle">We analyzed what makes legendary co-founders invaluable, then infused every one
-                of those capabilities into Co-founder.AI.</p>
-        </div>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">🧠</div>
-                <h3 class="feature-title">Vision & Strategy</h3>
-                <p class="feature-desc">Pivot, validate ideas, and find product-market fit. Co-founder.AI continuously
-                    analyzes Indian market trends and helps you refine your business model dynamically with VC-grade
-                    frameworks.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">⚙️</div>
-                <h3 class="feature-title">Product Engineering</h3>
-                <p class="feature-desc">Need a CTO to build the MVP? Co-founder.AI architects scalable systems, writes
-                    robust code across the full stack, and lays out infrastructure architecture in seconds.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">📈</div>
-                <h3 class="feature-title">Growth & Marketing</h3>
-                <p class="feature-desc">Go-to-market is half the battle. Our AI acts as your CMO — identifying early
-                    adopter profiles, writing high-converting copy, and optimizing digital ad spend for the Indian
-                    market.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🤝</div>
-                <h3 class="feature-title">Pitch & Fundraising</h3>
-                <p class="feature-desc">Raising money requires flawless decks and airtight financial models.
-                    Co-founder.AI generates data-backed pitch structures and runs financial projections like a seasoned
-                    CFO.</p>
-            </div>
-        </div>
+    <section class="hero-section" id="features" style="padding-top: 80px;">
+        <div class="badge">Capabilities</div>
+        <h2 class="hero-title" style="font-size: 3.5rem;">Beyond Just <span class="gradient-text">Chat</span></h2>
+        <p class="hero-subtitle">Experience a full-stack AI co-founder that understands market dynamics, unit economics,
+            and fundraising better than any consultant.</p>
     </section>
-
-    <!-- ====== HOW IT WORKS ====== -->
-    <section class="how-section" id="how-it-works">
-        <div class="section-header">
-            <div class="section-tag">Process</div>
-            <h2 class="section-title">From <span class="gradient-text">Idea to Scale</span> in 3 Steps</h2>
-            <p class="section-subtitle">Co-founder.AI is designed for speed. Get from raw concept to actionable strategy
-                in minutes, not months.</p>
-        </div>
-        <div class="steps-grid">
-            <div class="step-card">
-                <div class="step-number">01</div>
-                <h3 class="step-title">Describe Your Vision</h3>
-                <p class="step-desc">Tell Co-founder.AI about your startup idea, industry, target market, or the problem
-                    you want to solve. No templates needed — just talk.</p>
-            </div>
-            <div class="step-card">
-                <div class="step-number">02</div>
-                <h3 class="step-title">Receive Deep Analysis</h3>
-                <p class="step-desc">Get instant, AI-powered insights: competitive landscape, unit economics (CAC/LTV),
-                    TAM analysis, Mermaid.js visualizations, and more.</p>
-            </div>
-            <div class="step-card">
-                <div class="step-number">03</div>
-                <h3 class="step-title">Execute & Scale</h3>
-                <p class="step-desc">Walk away with concrete action plans, pitch decks, financial models, and GTM
-                    strategies tailored to the Indian startup ecosystem.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- ====== TESTIMONIALS ====== -->
-    <section class="testimonials-section" id="testimonials">
-        <div class="section-header">
-            <div class="section-tag">Founder Stories</div>
-            <h2 class="section-title">Trusted by <span class="gradient-text">Ambitious Builders</span></h2>
-            <p class="section-subtitle">Hear from founders who used Co-founder.AI to sharpen their strategy and
-                accelerate their journey.</p>
-        </div>
-        <div class="testimonials-grid">
-            <div class="testimonial-card">
-                <div class="stars">★★★★★</div>
-                <p class="testimonial-quote">"Co-founder.AI gave me a full unit economics breakdown for my D2C brand in
-                    under 60 seconds. The Mermaid chart it generated was cleaner than what our consultant charged
-                    ₹80,000 for."</p>
-                <div class="testimonial-author">
-                    <div class="author-avatar" style="background: linear-gradient(135deg, #7c3aed, #06b6d4);">R</div>
-                    <div>
-                        <div class="author-name">Riya Mehta</div>
-                        <div class="author-role">Founder, GlowBox India · Mumbai</div>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-card">
-                <div class="stars">★★★★★</div>
-                <p class="testimonial-quote">"I pitched to Peak XV last month. My deck structure, financial projections,
-                    and competitive moat analysis were all crafted with Co-founder.AI. We closed our seed round."</p>
-                <div class="testimonial-author">
-                    <div class="author-avatar" style="background: linear-gradient(135deg, #6366f1, #a855f7);">A</div>
-                    <div>
-                        <div class="author-name">Arjun Sinha</div>
-                        <div class="author-role">Co-founder, HealthStack · Bangalore</div>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-card">
-                <div class="stars">★★★★★</div>
-                <p class="testimonial-quote">"The India-first context is what sets this apart. It understands Tier-2
-                    markets, UPI behaviour, and MSME dynamics. This is not just another ChatGPT wrapper."</p>
-                <div class="testimonial-author">
-                    <div class="author-avatar" style="background: linear-gradient(135deg, #06b6d4, #22c55e);">P</div>
-                    <div>
-                        <div class="author-name">Priya Nair</div>
-                        <div class="author-role">CEO, AgriLink · Hyderabad</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ====== PRICING ====== -->
-    <section class="pricing-section" id="pricing">
-        <div class="section-header">
-            <div class="section-tag">Pricing</div>
-            <h2 class="section-title">Plans Built for <span class="gradient-text">Every Stage</span></h2>
-            <p class="section-subtitle">From solo founders to funded startups. Start free, scale as you grow.</p>
-        </div>
-        <div class="pricing-grid">
-            <div class="pricing-card">
-                <div class="plan-name">Free</div>
-                <div class="plan-price">₹0<span>/month</span></div>
-                <p class="plan-desc">Perfect for idea validation & exploration.</p>
-                <ul class="plan-features">
-                    <li>20 AI messages/day</li>
-                    <li>Mermaid chart generation</li>
-                    <li>Markdown formatted responses</li>
-                    <li class="locked">Multi-turn memory</li>
-                    <li class="locked">Export pitch decks (PDF)</li>
-                    <li class="locked">Priority Groq inference</li>
-                </ul>
-                <button class="secondary-btn" style="width:100%; justify-content:center;"
-                    onclick="window.location.href='/login'">Get Started Free</button>
-            </div>
-            <div class="pricing-card popular">
-                <div class="popular-badge">Most Popular</div>
-                <div class="plan-name">Pro</div>
-                <div class="plan-price">₹999<span>/month</span></div>
-                <p class="plan-desc">For serious founders in growth mode.</p>
-                <ul class="plan-features">
-                    <li>Unlimited AI messages</li>
-                    <li>Mermaid chart generation</li>
-                    <li>Multi-turn conversation memory</li>
-                    <li>Export pitch decks (PDF)</li>
-                    <li>Priority Groq inference</li>
-                    <li class="locked">Dedicated account manager</li>
-                </ul>
-                <button class="primary-btn" style="width:100%;" onclick="window.location.href='/login'">Start Pro
-                    Trial</button>
-            </div>
-            <div class="pricing-card">
-                <div class="plan-name">Scale</div>
-                <div class="plan-price">₹4,999<span>/month</span></div>
-                <p class="plan-desc">For funded startups & founding teams.</p>
-                <ul class="plan-features">
-                    <li>Everything in Pro</li>
-                    <li>Dedicated account manager</li>
-                    <li>Custom AI persona & tone</li>
-                    <li>Team seats (up to 10)</li>
-                    <li>API access</li>
-                    <li>SLA-backed uptime guarantee</li>
-                </ul>
-                <button class="secondary-btn" style="width:100%; justify-content:center;"
-                    onclick="window.location.href='/login'">Contact Sales</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- ====== CONTACT ====== -->
-    <section class="contact-section" id="contact">
-        <div class="section-header">
-            <div class="section-tag">Contact</div>
-            <h2 class="section-title">Get In <span class="gradient-text">Touch</span></h2>
-            <p class="section-subtitle">Ready to onboard your new AI Co-founder? We'd love to hear from you.</p>
-        </div>
-        <div class="contact-container">
-            <div class="contact-card">
-                <h3>MAANV.AI HQ</h3>
-                <p>📧 maanvcofounder.ai@gmail.com</p>
-                <p>📞 +91 8328574979</p>
-                <p>📍 Rajahmundry, Andhra Pradesh, India</p>
-                <p style="margin-top:1.5rem; font-size:0.85rem; color:var(--text-muted); line-height:1.6;">Built with ❤️
-                    for the Indian startup ecosystem. Powered by Llama 3.3-70B via Groq.</p>
-            </div>
-            <form class="contact-form"
-                onsubmit="event.preventDefault(); alert('Message sent! Our team will reach out shortly.');">
-                <input type="text" placeholder="Your Name" required>
-                <input type="email" placeholder="you@startup.com" required>
-                <input type="text" placeholder="Your Startup / Company">
-                <textarea placeholder="How can we help you scale?" rows="4" required></textarea>
-                <button type="submit" class="primary-btn">Send Message →</button>
-            </form>
-        </div>
-    </section>
-
-    <!-- ====== FOOTER ====== -->
-    <footer>
-        <div class="footer-inner">
-            <div>
-                <a href="/" class="logo"
-                    style="text-decoration:none; color:inherit; font-size:1.3rem;">MAANV<span>.AI</span></a>
-                <p class="footer-copy" style="margin-top:0.5rem;">© 2026 MAANV.AI. All rights reserved.</p>
-            </div>
-            <div class="footer-links">
-                <a href="#features">Features</a>
-                <a href="#how-it-works">How It Works</a>
-                <a href="#pricing">Pricing</a>
-                <a href="#contact">Contact</a>
-                <a href="/login">Sign In</a>
-            </div>
-            <div class="footer-socials">
-                <a href="#" class="social-icon" title="Twitter / X">𝕏</a>
-                <a href="#" class="social-icon" title="LinkedIn">in</a>
-                <a href="#" class="social-icon" title="GitHub">⌂</a>
-            </div>
-        </div>
-    </footer>
 
     <!-- External JS -->
     <script src="/static/script.js"></script>

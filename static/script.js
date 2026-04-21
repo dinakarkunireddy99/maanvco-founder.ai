@@ -197,7 +197,7 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             const response = await fetch('/api/chat', {
                 method: 'POST',
-                headers: { 
+                headers: {
                     'Content-Type': 'application/json',
                     'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').content
                 },
@@ -389,12 +389,12 @@ window.toggleSidebar = function () {
 // ============================================================
 //  CHART HELPERS (Download & Fullscreen)
 // ============================================================
-window.downloadChart = function(id) {
+window.downloadChart = function (id) {
     const container = document.getElementById(id + '-container');
     if (!container) return;
     const svg = container.querySelector('svg');
     if (!svg) return;
-    
+
     const svgData = new XMLSerializer().serializeToString(svg);
     const blob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
     const url = URL.createObjectURL(blob);
@@ -407,10 +407,10 @@ window.downloadChart = function(id) {
     URL.revokeObjectURL(url);
 };
 
-window.toggleFullscreenChart = function(id) {
+window.toggleFullscreenChart = function (id) {
     const container = document.getElementById(id + '-container');
     if (!container) return;
-    
+
     if (document.fullscreenElement) {
         document.exitFullscreen();
         container.classList.remove('fullscreen-svg');
