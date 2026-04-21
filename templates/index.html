@@ -7,6 +7,8 @@
     <title>MAANV.AI | Co-founder.AI — Your AI Business Partner for the Indian Startup Ecosystem</title>
     <meta name="description"
         content="Co-founder.AI by MAANV is the ultimate AI co-founder for Indian startups. Get data-driven strategy, unit economics, Mermaid charts, growth frameworks and VC-level insights — powered by Llama 3.3-70B.">
+    <!-- CSRF Token for Security -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Modern Fonts -->
     <link
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@300;400;500;600&display=swap"
@@ -47,8 +49,7 @@
         <div class="hero-content">
             <div class="badge">✦ Introducing Co-founder.AI — India's First AI Business Partner</div>
             <h1 class="hero-title">CO-FOUNDER<span class="gradient-text">.AI</span></h1>
-            <p class="hero-subtitle">Where human imagination meets machine intelligence. The elite AI partner built to
-                ideate, validate, and scale your startup in the Indian ecosystem — at the speed of thought.</p>
+            <p class="hero-subtitle">Don't just build a startup—build a unicorn. The elite AI partner that challenges your ideas, validates your unit economics, and drafts your GTM roadmap in the Indian ecosystem.</p>
             <div class="hero-actions">
                 <button class="primary-btn" onclick="triggerOnboarding()">Meet Co-founder.AI →</button>
                 <button class="secondary-btn" onclick="window.location.href='/login'" id="demo-btn">Sign In / Register

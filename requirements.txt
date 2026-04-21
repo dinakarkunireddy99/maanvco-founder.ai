@@ -2,3 +2,8 @@ Flask==3.0.3
 groq
 gunicorn
 flask-cors
+Werkzeug>=3.0.0
+argon2-cffi
+flask-talisman
+flask-limiter
+flask-seasurf

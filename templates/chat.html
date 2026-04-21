@@ -6,6 +6,7 @@
     <title>Workspace | MAANV.AI — Co-founder Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Rendering Engines -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -206,7 +207,7 @@
             <div class="sidebar-footer">
                 <a href="/" class="sidebar-btn">← Back to Home</a>
                 <button class="sidebar-btn" id="clear-chat-btn">🗑 Clear Chat</button>
-                <button class="sidebar-btn danger" onclick="sessionStorage.removeItem('maanv_session_active'); localStorage.removeItem('user_logged_in'); window.location.href='/login';">Sign Out</button>
+                <button class="sidebar-btn danger" onclick="logout()">Sign Out</button>
             </div>
         </aside>
 
@@ -272,6 +273,19 @@
                 document.getElementById('chat-input').value = pendingMsg;
                 document.getElementById('send-btn').click();
             }, 600);
+        }
+        async function logout() {
+            try {
+                await fetch('/api/logout', { 
+                    method: 'POST',
+                    headers: { 'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').content }
+                });
+                localStorage.removeItem('user_logged_in');
+                window.location.href = '/login';
+            } catch (err) {
+                console.error("Logout failed:", err);
+                window.location.href = '/login'; 
+            }
         }
     </script>
 </body>

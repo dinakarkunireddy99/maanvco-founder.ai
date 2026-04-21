@@ -6,6 +6,7 @@
     <title>Sign In | MAANV.AI — Access Your AI Co-founder</title>
     <meta name="description" content="Sign in or create your MAANV.AI account to access Co-founder.AI — your elite AI business partner for the Indian startup ecosystem.">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="/static/style.css">
 
     <style>
@@ -362,45 +363,104 @@
             }
         }
 
-        function confirmSocialLogin() {
+        async function confirmSocialLogin() {
             const name  = document.getElementById('modal-name').value.trim();
             const email = document.getElementById('modal-email').value.trim();
+            
+            // For real security, we prompt for a password since the original social modal didn't have one
+            const password = prompt("Please set a password for your MAANV.AI account (min 8 chars):");
 
             if (!name)  { document.getElementById('modal-name').focus();  return; }
             if (!email || !email.includes('@')) { document.getElementById('modal-email').focus(); return; }
+            if (!password || password.length < 8) { alert("Password must be at least 8 characters."); return; }
 
-            // Show loading state
             const btn = document.getElementById('modal-confirm-btn');
             btn.textContent = 'Verifying…';
             btn.classList.add('loading');
 
-            // Simulate brief OAuth round-trip delay
-            setTimeout(() => {
-                completeLogin(name);
-            }, 1200);
+            try {
+                const res = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').content
+                    },
+                    body: JSON.stringify({ 
+                        full_name: name, 
+                        email: email, 
+                        password: password,
+                        provider: 'google'
+                    })
+                });
+                const data = await res.json();
+                if (data.status === 'success') {
+                    localStorage.setItem('user_logged_in', 'true');
+                    window.location.href = '/chat';
+                } else {
+                    alert(data.message);
+                }
+            } catch (err) {
+                alert("Connection error.");
+            } finally {
+                btn.textContent = 'Confirm & Continue →';
+                btn.classList.remove('loading');
+            }
         }
 
         /* ---- Email Login / Sign-up ---- */
-        function emailLogin() {
+        async function emailLogin() {
             const email = document.getElementById('signin-email').value.trim();
-            const name  = email.split('@')[0]; // derive a name from email
-            completeLogin(name);
+            const password = document.getElementById('signin-password').value;
+
+            try {
+                const res = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').content
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+                const data = await res.json();
+                if (data.status === 'success') {
+                    localStorage.setItem('user_logged_in', 'true');
+                    window.location.href = '/chat';
+                } else {
+                    alert(data.message);
+                }
+            } catch (err) {
+                alert("Connection error.");
+            }
         }
 
-        function emailSignUp() {
+        async function emailSignUp() {
             const name = document.getElementById('signup-name').value.trim();
-            completeLogin(name);
-        }
+            const email = document.getElementById('signup-email').value.trim();
+            const password = document.getElementById('signup-password').value;
 
-        /* ---- Complete Login (shared) ---- */
-        function completeLogin(displayName) {
-            // Mark session as active — sessionStorage so it clears on tab close
-            sessionStorage.setItem('maanv_session_active', 'true');
-            sessionStorage.setItem('maanv_user_name', displayName || 'Founder');
-            localStorage.setItem('user_logged_in', 'true');
-
-            // Read pending message teleported from landing page, then go to workspace
-            window.location.href = '/chat';
+            try {
+                const res = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').content
+                    },
+                    body: JSON.stringify({
+                        full_name: name,
+                        email: email,
+                        password: password
+                    })
+                });
+                const data = await res.json();
+                if (data.status === 'success') {
+                    localStorage.setItem('user_logged_in', 'true');
+                    window.location.href = '/chat';
+                } else {
+                    alert(data.message);
+                }
+            } catch (err) {
+                alert("Connection error.");
+            }
         }
     </script>
 </body>

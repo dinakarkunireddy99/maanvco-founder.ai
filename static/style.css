@@ -346,17 +346,25 @@ body {
 .chat-bubble.ai.typing {
     color: var(--text-muted);
     font-style: italic;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 /* Typing dots animation */
 .typing::after {
     content: '';
-    animation: typingDots 1.4s infinite;
+    width: 4px;
+    height: 4px;
+    background: var(--primary-alt);
+    border-radius: 50%;
+    box-shadow: 8px 0 var(--primary-alt), 16px 0 var(--primary-alt);
+    animation: typingPulse 1.5s infinite;
+    margin-left: 0.5rem;
 }
-@keyframes typingDots {
-    0%, 100% { content: ''; }
-    25%       { content: '.'; }
-    50%       { content: '..'; }
-    75%       { content: '...'; }
+@keyframes typingPulse {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.2); }
 }
 /* Copy button on AI bubbles */
 .bubble-copy-btn {
@@ -388,8 +396,15 @@ body {
 .chat-bubble.ai table { border-collapse: collapse; width: 100%; margin: 0.8rem 0; font-size: 0.9rem; }
 .chat-bubble.ai th { background: rgba(124,58,237,0.2); padding: 0.5rem 0.8rem; text-align: left; border: 1px solid var(--glass-border); }
 .chat-bubble.ai td { padding: 0.5rem 0.8rem; border: 1px solid var(--glass-border); }
-.ai-chart-render { background: #fff; border-radius: 12px; padding: 12px; margin: 12px 0; overflow-x: auto; }
-.ai-chart-render svg { max-width: 100%; }
+.ai-chart-render { background: #fff; border-radius: 12px; padding: 12px; margin: 12px 0; overflow: hidden; position: relative; border: 1px solid var(--glass-border); }
+.ai-chart-render svg { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+.chart-controls { position: absolute; top: 8px; right: 8px; display: flex; gap: 4px; z-index: 5; opacity: 0; transition: opacity 0.3s; }
+.ai-chart-render:hover .chart-controls { opacity: 1; }
+.chart-btn { background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.1); color: white; width: 28px; height: 28px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; transition: all 0.2s; backdrop-filter: blur(4px); }
+.chart-btn:hover { background: var(--primary-color); border-color: var(--primary-color); transform: scale(1.1); }
+.svg-container { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+.svg-container.fullscreen-svg { background: #fff; padding: 40px; }
+.svg-container.fullscreen-svg svg { max-height: 90vh; width: auto; }
 
 /* ====================================================
    STATS TICKER
